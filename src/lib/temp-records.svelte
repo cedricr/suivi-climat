@@ -39,7 +39,7 @@
           .map((line) => line.split(","));
 
         // headers
-        console.log(parsedData[0]);
+        // console.log(parsedData[0]);
 
         const stationsData = parsedData.slice(1);
         const sliderSteps = [];
@@ -78,7 +78,7 @@
                 },
                 {
                   traces: [1],
-                  hovertemplate: "%{y} record(s)<extra></extra>",
+                  hovertemplate: "%{y} record(s) de chaleur<extra></extra>",
                   x: clone(indexes),
                   y: clone(numRecordsHot),
                 },
@@ -93,7 +93,7 @@
                 },
                 {
                   traces: [3],
-                  hovertemplate: "%{y} record(s)<extra></extra>",
+                  hovertemplate: "%{y} record(s) de fraîcheur<extra></extra>",
                   x: clone(indexes),
                   y: clone(numRecordsCold),
                 },
