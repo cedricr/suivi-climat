@@ -1,0 +1,33 @@
+{
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[markdown]": {
+		"files.trimTrailingWhitespace": false
+	},
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"editor.codeActionsOnSave": {
+		"source.fixAll": true
+	},
+	"editor.formatOnSave": true,
+	"editor.quickSuggestions": {
+		"strings": true
+	},
+	"eslint.probe": ["javascript", "svelte"],
+	"eslint.validate": ["javascript", "svelte"],
+	"files.exclude": {
+		".svelte-kit": true,
+		"build": true
+	},
+	"files.trimTrailingWhitespace": true,
+	"svelte.plugin.css.globals": "src/app.css",
+	"tailwindCSS.validate": true
+}
