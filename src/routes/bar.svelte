@@ -1,5 +1,5 @@
 <script>
-  import TempRecords from "$lib/temp-recordsbar.svelte";
+  import TempRecords from "$lib/temp-records-bar.svelte";
 </script>
 
 <div class="m-8">
