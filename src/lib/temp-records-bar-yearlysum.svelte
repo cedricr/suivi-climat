@@ -1,9 +1,9 @@
 <script>
   import { onMount } from "svelte";
-
   export let standalone = false;
   let plotDiv;
   const MIN_YEAR = 1950;
+  const MAX_YEAR = 2022;
 
   function filterDataForDate(allData, col_idx, date) {
     return allData
@@ -31,7 +31,7 @@
           .map((line) => line.split(","));
 
         // headers
-        // console.log(parsedData[0]);
+        console.log(parsedData[0]);
 
         const stationsData = parsedData.slice(1);
         const indexes = [];
@@ -40,43 +40,42 @@
         const customdataHot = [];
         const customdataCold = [];
 
-        for (let year = MIN_YEAR; year <= 2022; year++) {
+        for (let year = MIN_YEAR; year <= MAX_YEAR; year++) {
           const numStationsForYear = stationsData.filter(
             (station) => station[6] <= year && year <= station[7]
           ).length;
-          for (let month = 1; month <= 12; month++) {
-            if (year === 2022 && month >= 7) break;
-            const date = `${year}-${month.toString().padStart(2, "0")}`;
-            const hotDataForDate = filterDataForDate(
-              stationsData,
-              20 + month,
-              date
+
+          const date = `${year}`;
+          let hotDataForDate = [];
+          let coldDataForDate = [];
+          for (let month_idx = 0; month_idx < 12; month_idx++) {
+            hotDataForDate = hotDataForDate.concat(
+              filterDataForDate(stationsData, 21 + month_idx, date)
             );
-            const coldDataForDate = filterDataForDate(
-              stationsData,
-              46 + month,
-              date
+            coldDataForDate = coldDataForDate.concat(
+              filterDataForDate(stationsData, 47 + month_idx, date)
             );
-            indexes.push(new Date(date));
-            numRecordsHot.push(hotDataForDate.length / numStationsForYear);
-            numRecordsCold.push(-coldDataForDate.length / numStationsForYear);
-            customdataHot.push({
-              date: date,
-              numRecords: hotDataForDate.length,
-              numStationsForYear,
-              percent: Math.round(
-                (hotDataForDate.length / numStationsForYear) * 100
-              ),
-            });
-            customdataCold.push({
-              date: date,
-              numRecords: coldDataForDate.length,
-              numStationsForYear,
-              percent: Math.round(
-                (coldDataForDate.length / numStationsForYear) * 100
-              ),
-            });
           }
+
+          indexes.push(new Date(date.toString()));
+          numRecordsHot.push(hotDataForDate.length / numStationsForYear);
+          numRecordsCold.push(-coldDataForDate.length / numStationsForYear);
+          customdataHot.push({
+            date: date,
+            numRecords: hotDataForDate.length,
+            numStationsForYear,
+            percent: Math.round(
+              (hotDataForDate.length / numStationsForYear) * 100
+            ),
+          });
+          customdataCold.push({
+            date: date,
+            numRecords: coldDataForDate.length,
+            numStationsForYear,
+            percent: Math.round(
+              (coldDataForDate.length / numStationsForYear) * 100
+            ),
+          });
         }
         const traces = [
           {
@@ -128,7 +127,7 @@
 
           showlegend: false,
           barmode: "relative",
-          bargap: 0,
+          bargap: 0.1,
           bargroupgap: 0.0,
 
           xaxis: {
@@ -150,7 +149,6 @@
         };
 
         const config = {
-          // responsive: true,
           displayModeBar: false,
           locale: "fr",
           scrollZoom: false,
@@ -163,10 +161,13 @@
 </script>
 
 {#if standalone}
-  <h1 class="mb-1 text-[#010931]">Nombre de records de température mensuels</h1>
-  <p class="text-sm italic text-[#71768D]">Données Météo-France</p>
+  <h1 class="mb-1 text-[#010931]">Records de température en France</h1>
+  <p class="text-sm italic text-[#71768D]">
+    Données Météo-France<br />Sommes des nombres mensuels de records, pondérées
+    par le nombre de station.
+  </p>
 {:else}
-  <h2 class="mb-1 text-[#010931]">Records mensuels</h2>
+  <h2 class="mb-1 text-[#010931]">Records annuels</h2>
 {/if}
 <div class="mt-4 flex h-1/2">
   <div bind:this={plotDiv} class="h-full" />
