@@ -39,6 +39,8 @@
         const numRecordsCold = [];
         const customdataHot = [];
         const customdataCold = [];
+        let totalHot = 0;
+        let totalCold = 0;
 
         for (let year = MIN_YEAR; year <= MAX_YEAR; year++) {
           const numStationsForYear = stationsData.filter(
@@ -58,8 +60,12 @@
           }
 
           indexes.push(new Date(date.toString()));
-          numRecordsHot.push(hotDataForDate.length / numStationsForYear);
-          numRecordsCold.push(-coldDataForDate.length / numStationsForYear);
+          const hotValue = hotDataForDate.length / numStationsForYear;
+          numRecordsHot.push(hotValue);
+          totalHot += hotValue;
+          const coldValue = coldDataForDate.length / numStationsForYear;
+          numRecordsCold.push(-coldValue);
+          totalCold -= coldValue;
           customdataHot.push({
             date: date,
             numRecords: hotDataForDate.length,
@@ -116,7 +122,7 @@
         ];
 
         const layout = {
-          height: 300,
+          height: 400,
           margin: {
             l: 40,
             r: 80,
@@ -142,8 +148,20 @@
             showgrid: true,
           },
           yaxis: {
+            showgrid: true,
             autorange: true,
-            visible: false,
+            visible: true,
+            tickmode: "array",
+            tickvals: [
+              totalCold / (MAX_YEAR - MIN_YEAR + 1),
+              totalHot / (MAX_YEAR - MIN_YEAR + 1),
+            ],
+            ticktext: ["moy.", "moy."],
+            tickfont: {
+              size: 10,
+              color: "#71768D",
+              family: "Arial, sans-serif",
+            },
           },
           dragmode: false,
         };
