@@ -1,13 +1,12 @@
 <script>
   import { onMount } from "svelte";
 
-  export let standalone = false;
   let plotDiv;
   const MIN_YEAR = 1950;
 
   function filterDataForDate(allData, col_idx, date) {
     return allData
-      .filter((stationRow) => stationRow[col_idx].startsWith(date))
+      .filter((stationRow) => stationRow[col_idx] === date.toString())
       .map((stationRow) => {
         return [
           stationRow[0], // id
@@ -44,39 +43,29 @@
           const numStationsForYear = stationsData.filter(
             (station) => station[6] <= year && year <= station[7]
           ).length;
-          for (let month = 1; month <= 12; month++) {
-            if (year === 2022 && month >= 6) break;
-            const date = `${year}-${month.toString().padStart(2, "0")}`;
-            const hotDataForDate = filterDataForDate(
-              stationsData,
-              20 + month,
-              date
-            );
-            const coldDataForDate = filterDataForDate(
-              stationsData,
-              46 + month,
-              date
-            );
-            indexes.push(new Date(date));
-            numRecordsHot.push(hotDataForDate.length / numStationsForYear);
-            numRecordsCold.push(-coldDataForDate.length / numStationsForYear);
-            customdataHot.push({
-              date: date,
-              numRecords: hotDataForDate.length,
-              numStationsForYear,
-              percent: Math.round(
-                (hotDataForDate.length / numStationsForYear) * 100
-              ),
-            });
-            customdataCold.push({
-              date: date,
-              numRecords: coldDataForDate.length,
-              numStationsForYear,
-              percent: Math.round(
-                (coldDataForDate.length / numStationsForYear) * 100
-              ),
-            });
-          }
+
+          const date = year;
+          const hotDataForDate = filterDataForDate(stationsData, 33, date);
+          const coldDataForDate = filterDataForDate(stationsData, 59, date);
+          indexes.push(new Date(date.toString()));
+          numRecordsHot.push(hotDataForDate.length / numStationsForYear);
+          numRecordsCold.push(-coldDataForDate.length / numStationsForYear);
+          customdataHot.push({
+            date: date,
+            numRecords: hotDataForDate.length,
+            numStationsForYear,
+            percent: Math.round(
+              (hotDataForDate.length / numStationsForYear) * 100
+            ),
+          });
+          customdataCold.push({
+            date: date,
+            numRecords: coldDataForDate.length,
+            numStationsForYear,
+            percent: Math.round(
+              (coldDataForDate.length / numStationsForYear) * 100
+            ),
+          });
         }
         const traces = [
           {
@@ -150,7 +139,6 @@
         };
 
         const config = {
-          // responsive: true,
           displayModeBar: false,
           locale: "fr",
           scrollZoom: false,
@@ -162,12 +150,8 @@
   });
 </script>
 
-{#if standalone}
-  <h1 class="mb-1 text-[#010931]">Nombre de records de température mensuels</h1>
-  <p class="text-sm italic text-[#71768D]">Données Météo-France</p>
-{:else}
-  <h2 class="mb-1 text-[#010931]">Records mensuels</h2>
-{/if}
+<h2 class="mb-1 text-[#010931]">Records annuels</h2>
+
 <div class="mt-4 flex h-1/2">
   <div bind:this={plotDiv} class="h-full" />
 </div>

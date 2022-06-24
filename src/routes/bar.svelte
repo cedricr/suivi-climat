@@ -3,5 +3,5 @@
 </script>
 
 <div class="m-8">
-  <TempRecords />
+  <TempRecords standalone />
 </div>
