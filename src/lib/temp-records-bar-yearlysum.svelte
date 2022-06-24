@@ -71,7 +71,7 @@
             numRecords: hotDataForDate.length,
             numStationsForYear,
             percent: Math.round(
-              (hotDataForDate.length / numStationsForYear) * 100
+              ((hotDataForDate.length / numStationsForYear) * 100) / 12
             ),
           });
           customdataCold.push({
@@ -79,7 +79,7 @@
             numRecords: coldDataForDate.length,
             numStationsForYear,
             percent: Math.round(
-              (coldDataForDate.length / numStationsForYear) * 100
+              ((coldDataForDate.length / numStationsForYear) * 100) / 12
             ),
           });
         }
