@@ -19,7 +19,7 @@
           stationRow[1], // name
           stationRow[4], // lat
           stationRow[5], // lon
-          new Date(stationRow[col_idx]).toLocaleDateString(), // date
+          stationRow[col_idx], // date
           stationRow[col_idx - 13], // temp
         ];
       });
