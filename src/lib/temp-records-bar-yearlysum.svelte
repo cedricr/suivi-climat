@@ -181,12 +181,21 @@
 {#if standalone}
   <h1 class="mb-1 text-[#010931]">Records de température en France</h1>
   <p class="text-sm italic text-[#71768D]">
-    Données Météo-France<br />Sommes des nombres mensuels de records, pondérées
-    par le nombre de station.
+    Données Météo-France juin 2022<br />
+    Sommes des nombres mensuels de records, pondérées par le nombre de station.
   </p>
 {:else}
   <h2 class="mb-1 text-[#010931]">Records annuels</h2>
 {/if}
-<div class="mt-4 flex h-1/2">
+<div class="my-4 flex h-1/2">
   <div bind:this={plotDiv} class="h-full" />
+</div>
+<div class="mt-12 mr-8 flex flex-row items-center justify-end gap-2">
+  <a href="https://twitter.com/cedricr" class="text-sm italic text-[#71768D]"
+    >@cedricr</a>
+  <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+    <img
+      alt="Licence Creative Commons cc-by-sa 4.0"
+      src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" />
+  </a>
 </div>
