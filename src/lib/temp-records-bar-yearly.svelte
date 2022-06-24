@@ -128,7 +128,7 @@
               family: "Arial, sans-serif",
             },
             tickangle: -50,
-            nticks: 40,
+            nticks: 30,
             showgrid: true,
           },
           yaxis: {
