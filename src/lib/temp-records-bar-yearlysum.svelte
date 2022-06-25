@@ -31,7 +31,7 @@
           .map((line) => line.split(","));
 
         // headers
-        console.log(parsedData[0]);
+        // console.log(parsedData[0]);
 
         const stationsData = parsedData.slice(1);
         const indexes = [];
@@ -39,6 +39,8 @@
         const numRecordsCold = [];
         const customdataHot = [];
         const customdataCold = [];
+        const hotBarColors = [];
+        const coldBarColors = [];
         let totalHot = 0;
         let totalCold = 0;
 
@@ -66,6 +68,8 @@
           const coldValue = coldDataForDate.length / numStationsForYear;
           numRecordsCold.push(-coldValue);
           totalCold -= coldValue;
+          hotBarColors.push(year === 2022 ? "transparent" : "#FF3500");
+          coldBarColors.push(year === 2022 ? "transparent" : "#0078FF");
           customdataHot.push({
             date: date,
             numRecords: hotDataForDate.length,
@@ -73,6 +77,7 @@
             percent: Math.round(
               ((hotDataForDate.length / numStationsForYear) * 100) / 12
             ),
+            notes: year === 2022 ? "données incomplètes pour l’année" : "",
           });
           customdataCold.push({
             date: date,
@@ -81,6 +86,7 @@
             percent: Math.round(
               ((coldDataForDate.length / numStationsForYear) * 100) / 12
             ),
+            notes: year === 2022 ? "données incomplètes pour l’année" : "",
           });
         }
         const traces = [
@@ -92,12 +98,16 @@
               font: { color: "#FF3500", family: "Arial, sans-serif" },
             },
             marker: {
-              color: "#FF3500",
+              color: hotBarColors,
               opacity: 0.5,
+              line: {
+                width: 0.5,
+                color: "#FF3500",
+              },
             },
             customdata: customdataHot,
             hovertemplate:
-              "%{customdata.numRecords} record(s) de chaleur pour %{customdata.numStationsForYear} stations (%{customdata.percent} %)<br><extra></extra>",
+              "<b>%{customdata.date}</b><br><b>%{customdata.notes}</b><br>%{customdata.numRecords} record(s) de chaleur mensuels<br>sur un total de %{customdata.numStationsForYear} stations (%{customdata.percent} %)<br><extra></extra>",
             x: indexes,
             y: numRecordsHot,
           },
@@ -110,12 +120,16 @@
               font: { color: "#0078FF", family: "Arial, sans-serif" },
             },
             marker: {
-              color: "#0078FF",
+              color: coldBarColors,
               opacity: 0.5,
+              line: {
+                width: 0.5,
+                color: "#0078FF",
+              },
             },
             customdata: customdataCold,
             hovertemplate:
-              "%{customdata.numRecords} record(s) de fraîcheur pour %{customdata.numStationsForYear} stations (%{customdata.percent} %)<br><extra></extra>",
+              "<b>%{customdata.date}</b><br><b>%{customdata.notes}</b><br>%{customdata.numRecords} record(s) de fraîcheur mensuels<br>sur un total de %{customdata.numStationsForYear} stations (%{customdata.percent} %)<br><extra></extra>",
             x: indexes,
             y: numRecordsCold,
           },
