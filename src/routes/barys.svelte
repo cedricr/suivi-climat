@@ -1,7 +1,6 @@
 <script>
-  import TempRecordsYS from "$lib/temp-records-bar-yearlysum.svelte";
+  import { browser } from "$app/env";
+  if (browser) {
+    window.location = `/records-mensuels`;
+  }
 </script>
-
-<div class="m-4">
-  <TempRecordsYS standalone />
-</div>

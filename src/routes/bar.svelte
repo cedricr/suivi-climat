@@ -1,7 +1,6 @@
 <script>
-  import TempRecords from "$lib/temp-records-bar.svelte";
+  import { browser } from "$app/env";
+  if (browser) {
+    window.location = `/records-mensuels`;
+  }
 </script>
-
-<div class="m-8">
-  <TempRecords standalone />
-</div>
