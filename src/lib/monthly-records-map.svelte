@@ -308,22 +308,6 @@
         Plotly.newPlot(map, { data: traces, layout, frames, config });
       });
   });
-
-  // function handleStartAnimation() {
-  //   Plotly.animate(map, null, {
-  //     mode: "immediate",
-  //     fromcurrent: true,
-  //     transition: { duration: DURATION },
-  //     frame: { duration: DURATION, redraw: true },
-  //   });
-  // }
-  // function handleStopAnimation() {
-  //   Plotly.animate(map, [], {
-  //     mode: "immediate",
-  //     transition: { duration: 0 },
-  //     frame: { duration: 0, redraw: true },
-  //   });
-  // }
 </script>
 
 <h1 class="mb-1">Records de température mensuels</h1>
