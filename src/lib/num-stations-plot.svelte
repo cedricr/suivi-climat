@@ -126,7 +126,7 @@
 </script>
 
 <h1 class="mb-1 max-w-3xl text-gray-800">
-  Évolution du nombre de stations Météo-France en Open Data
+  Évolution du nombre de stations Météo-France
 </h1>
 
 <p class="mb-4 max-w-lg text-sm italic text-gray-500">
